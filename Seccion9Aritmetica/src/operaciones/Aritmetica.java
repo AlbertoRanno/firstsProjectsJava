@@ -2,7 +2,7 @@ package operaciones;
 
 public class Aritmetica {
     /*Atributos de la clase*/
-    int a; //Por default 0
+    int a; //Por default 0 - Cuando NO defino atributos es que al hacerle el print al objeto veo la clase, y el nombre del espacio reservado en memoria
     int b;
     
     /*Seccion 10 - Constructores
@@ -33,7 +33,7 @@ public class Aritmetica {
         int resultado = a + b;
         System.out.println("resultado = " + resultado);
         /***********IMPORTANTE***********
-        Mandar información a consola, NO ES LO MISMO que regresar un valor
+        Mandar información a consola, NO ES LO MISMO que regresar un valor (console.log era distinto de return, logico)
         tener presente que lo definimos como metodo VOID (en ingles significa vacio)*/
     }
     
@@ -50,10 +50,10 @@ public class Aritmetica {
     //"nombre del metodo" (sumarConArgumentos)
     //"Argumentos"(int arg1, int arg2) - (eso, cuando estan aca, en la definicion, sino para involcarlos, "Parametros", pero nadie es tan tecnico, y todos los suelen llamar igual...
     public int sumarConArgumentos(int arg1, int arg2){
-        //ya no utilizaría el valor de a y b que fue dado en los atributos, sino que lo modifico:
+        //ya no utilizaría el valor de a y b que fue dado en los atributos de la clase, sino que lo modifico:
         a = arg1; 
         b = arg2;
-        //return a + b; //aqui se podria llamar tmb al metodo sumarConRetorno, para no repetir este a+b, pero dado que es muy simple...
+        //return a + b; //aqui se podria llamar tmb al metodo sumarConRetorno, para no repetir este a+b:
         return sumarConRetorno(); //al llamar a este metodo, el mismo tomara los valores que aqui puse como argumentos
         //luego de actualizar aca, guardar cambios para poder acceder desde otra clase
         
