@@ -32,8 +32,8 @@ public class Persona {
     Las clases sirven para crear objetos
      */
     //Atributos de la clase
-    String nombre;
-    String apellido;
+    public String nombre;
+    public String apellido;
 
     //Metodos de la clase - codigo que vamos a reutilizar y pueden recibir valores (argumentos), y pueden devolver valores (valores de retorno)
     //public - para saber que lo podemos utilizar desde fuera de esta clase
