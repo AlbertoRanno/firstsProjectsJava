@@ -120,7 +120,7 @@ public class Operadores {
         var valorMinimo = 0;
         var valorMaximo = 10;
 
-        var resultado3 = a2 >= 0 && a2 <= 10;
+        var resultado3 = a2 >= valorMinimo && a2 <= valorMaximo;
         System.out.println("resultado3 = " + resultado3);
 
         //Operador ternario: util para reemplazar estructuras tipo if - else sencillas, sino No se recomienda
@@ -167,8 +167,6 @@ public class Operadores {
 
         Perímetro: (alto + ancho) * 2
 
-        Puedes utilizar el IDE de tu preferencia para codificar la solución y después pegar tu solución en esta herramienta.
-
         Preguntas de esta tarea
         ¿Cuál es el código del requerimiento solicitado?
          */
@@ -196,8 +194,7 @@ public class Operadores {
         Proporciona el numero2:
         El numero mayor es:
         <numeroMayor>
-        Puedes utilizar el IDE de tu preferencia para codificar la solución y después pegar tu solución en esta herramienta.
-
+        
         Preguntas de esta tarea
         ¿Cuál es el código del requerimiento solicitado?
         */
