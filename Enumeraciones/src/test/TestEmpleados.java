@@ -5,7 +5,7 @@ import enumeraciones.Empleados;
 public class TestEmpleados {
 
     public static void main(String[] args) {
-        mostrarInfoEmpleado(Empleados.HERNAN);
+        mostrarInfoEmpleado(Empleados.FERNANDO);//tengo que pasar algun item de la enumeración, y NO cualquier String
     }
 
     public static void mostrarInfoEmpleado(Empleados empleado) {
