@@ -19,7 +19,7 @@ public class TestExepciones {
         Lo evito de la siguiente manera:   
 
         defino la variable fuera del bloque del error, ya que la voy a volver a usar posteriormente:        */
-        int resultado = 0;
+        int resultado = 0; // (Si el try/catch da error, se alerta, y se retoma el codigo desde este valor)
         //y envuelvo la expresion en un try/catch
         //        try {
         //            resultado = 10 / 0;

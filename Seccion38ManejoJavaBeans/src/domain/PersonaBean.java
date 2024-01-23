@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class PersonaBean implements Serializable {
 
-    /*Para que una clase sea considera un JAVABEANM debe cumplir una serie de requisitos.
+    /*Para que una clase sea considera un JAVABEAN debe cumplir una serie de requisitos.
     De cumplirlos, lo será, y como tal, podrá ser utilizada por java Enterprise, HIbernate, Spring...
-    Con escribir 'implements Serializable' luego del nombre de la clase, se importa la clase java.io.Serializable
+    Con escribir 'implements Serializable' luego del nombre de la clase, se importa la clase Serializable del paquete de java.io
     Esta lo que permite, y para lo que sirve en si, es, considerar toda la clase con sus atributos, y metodos
     y convertirla en Beans (al lenguaje binario, es decir, unos y ceros). Esto le permite a la red, compartir
     esta clase con otros equipos, y le permite a los frameworks nombrados, realizar tareas de la misma indole.
@@ -14,7 +14,7 @@ public class PersonaBean implements Serializable {
     
     El resto de los requisitos:
     *es que sus atributos sean privados
-    *Tengo un constructor publico, de modo que los frameworks puedan utilizarlo despreocupandose de sus atributos,
+    *Tengo un constructor publico vacio, de modo que los frameworks puedan utilizarlo despreocupandose de sus atributos,
     y lo hagan de forma generica. Esto no quita, que puede tener tambien, otros constructores para inicializarlos
     *TEngan los metodos get y set de sus atributos, de manera de poder usarlos en conjunto con el constructor vacio
     para inicializar los atributos (recordar que tildar el checkbox de encapsulate, lo que hace es pasar los 

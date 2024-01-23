@@ -1,6 +1,6 @@
 package accesodatos;
 
-/* CLASES ABSTRACTAS VD INTERFACES (nuevo tipo)
+/* CLASES ABSTRACTAS Vs INTERFACES (nuevo tipo)
 Las interfaces son parecidas, dado que No tienen una implementacion
 Todos sus metodos van a ser abstractos
 Todos sus atributos, de haberlos, seran constantes (Finales, Estaticos, Publicos CON_NOMBRES_ASI y valores ya definidos
@@ -18,12 +18,12 @@ CTRL+E donde esta el cursor, para borrar una linea
 Simulo una conexion a BBDD*/
 public interface IAccesoDatos {
 
-    /*Al no ser una clase, NO hereda de la clase Object, lo puedo ver con Ctrl+CLick sobre el nombre de la interface
+    /*Al no ser una clase, NO hereda de la clase Object, lo puedo ver con Ctrl+Cursor sobre el nombre de la interface
     Pero si puedo tener interfaces hijas que hereden de una interface padre
     Como todos los atributos van a ser constantes, con los tipos que eso implica, solo aclaro el tipo de dato:  */
     int MAX_REGISTRO = 10;
 
-    /*Con ctrl+click encima, veo que efectivamente es public static final
+    /*Con ctrl+cursor encima, veo que efectivamente es public static final
     Y como una interface no tiene constructores, ya tengo que definirle a cada atributo un valor, porque no se cambiaran
     Solo tendra metodos y todos abstractos.*/
 
