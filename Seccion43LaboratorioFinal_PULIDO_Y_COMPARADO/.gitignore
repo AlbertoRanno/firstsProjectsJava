@@ -1,0 +1,21 @@
+# Directorios
+bin/
+target/
+out/
+dist/
+
+# Archivos de configuración específicos de NetBeans
+nbproject/private/
+build/
+nbbuild/
+nbdeploy/
+
+# Archivos de configuración de IDE
+.idea/
+
+# Archivos generados automáticamente
+*.class
+*.jar
+*.war
+*.ear
+
