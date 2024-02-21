@@ -106,6 +106,10 @@ Y quedaria => src/main/resources/META-INF/persistence.xml
 Se abre, y borro todo, salvo la 1er linea: <?xml version="1.0" encoding="UTF-8"?>
 Y debajo configuro el archivo con:
 
+OJO! Si vas a copiar el persistence desde aca: 
+-borra el '//(*1)'
+-cambia el nombre de HibernateEjemplo1 a HibernatePU
+
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
