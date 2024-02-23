@@ -29,14 +29,53 @@ public class ServicioPersonas {
 
     }
 
-    /*En el curso, dejan aca, y desarrollan la capa web, lo cual me pidieron omitir, por lo que voy a ver si 
+    //Completo los metodos, aunque no los voy a poder probar dado que no tengo servidor configurado
+    public void insertar(Persona persona) {
+        //Aqui se deberia hacer las validaciones necesarias
+        personaDao.insertar(persona);
+    }
+
+    public Persona buscarPersonaPorId(Persona persona) {
+        return personaDao.buscarPersonaPorId(persona);
+    }
+
+    public void modificar(Persona personaModificada) {
+        // Buscar la persona original en la base de datos
+        Persona personaExistente = personaDao.buscarPersonaPorId(personaModificada);
+
+        // Verificar si la persona existe
+        if (personaExistente != null) {
+            // Actualizar los datos de la persona existente con los de la persona modificada
+            personaExistente.setNombre(personaModificada.getNombre());
+            personaExistente.setApellido(personaModificada.getApellido());
+            personaExistente.setEmail(personaModificada.getEmail());
+            personaExistente.setTelefono(personaModificada.getTelefono());
+
+            // Guardar la persona modificada en la base de datos
+            personaDao.modificar(personaExistente);
+        } else {
+            throw new IllegalArgumentException("La persona especificada no existe en la base de datos.");
+        }
+    }
+
+    public void eliminar(Persona persona) {
+        persona = personaDao.buscarPersonaPorId(persona);
+        if (persona != null) {
+            personaDao.eliminar(persona);
+        } else {
+            throw new IllegalArgumentException("No se encontró ninguna persona con el ID especificado.");
+        }
+    }
+}
+
+/*En el curso, dejan aca, y desarrollan la capa web, lo cual me pidieron omitir, por lo que voy a ver si 
     puedo completar los otros metodos de los endpoints
     
     un resumen hasta este punto:
 
     Maven Configuración:
     He configurado un proyecto Maven con dependencias como Hibernate y MySQL connector para la gestión de bases de datos.
-    También has definido la versión de Java a utilizar y el punto de entrada de la aplicación.
+    También he definido la versión de Java a utilizar y el punto de entrada de la aplicación.
 
     Configuración de Persistencia con Hibernate:
     He configurado el archivo persistence.xml para la unidad de persistencia usando Hibernate.
@@ -91,5 +130,11 @@ public class ServicioPersonas {
     una base sólida para el desarrollo del frontend. Sin embargo, la comunicación y la colaboración
     entre los equipos de desarrollo backend y frontend son clave para el éxito del proyecto.
 
-    COMPLETAR LOS METODOS => JSON => POSTMAN */
-}
+    COMPLETAR LOS METODOS => JSON => POSTMAN 
+    
+    CLARO... PERO NOOOOOOO!!! FALTA UN SERVIDOR, GLASSFISH, JBOSS, O EL QUE SEA... DE MANERA QUE SEA 
+    POSIBLE CONFIGURAR UN PUERTO DE SALIDA Y ENRUTAR LOS ENDPOINTS. EL PUERTO 3306 Y LAS CONFIGS ACTUALES
+    SON PARA LA CONEXION CON LA BBDD PERO NO TIENEN NADA QUE VER PARA UNA CONEXION CON POSTMAN POR EJEMPLO.
+    PODRIA VER EL TEMA DE LOS SERVLETS, Y GLASSFISH, O, PODRIA ESPERAR A VER SPRING BOOT, QUE TIENE UN SERVIDOR
+    EMBEBIDO, Y ENTIENDO, ME VA A PERMITIR TAMBIEN MANEJAR LAS URLs DE LOS ENDPOINTS, COSA QUE CON HIBERNATE
+    NO ALCANZA, HIBERNATE ES PARA MAPEAR Y SIMPLIFICAR LA INTERACCION CON LA BBDD. PARA EL RESTO => SPRING BOOT*/
