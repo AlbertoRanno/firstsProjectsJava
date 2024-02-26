@@ -4,24 +4,65 @@ import java.util.List;
 import javax.persistence.*;
 import mx.com.gm.domain.Asignacion;
 
-public class AsignacionDao {
+public class AsignacionDao extends GenericDao {
 
-    private EntityManagerFactory emf;
-    private EntityManager em;
-
-    public AsignacionDao() {
-        this.emf = Persistence.createEntityManagerFactory("HibernatePU");
-        this.em = emf.createEntityManager();
-    }
-
-    public void listar() {
+    public List<Asignacion> listar() {
         String hql = "SELECT a from Asignacion a";
+        em = getEntityManager();
         Query query = em.createQuery(hql);
-        List<Asignacion> asignaciones = query.getResultList();
-        for (Asignacion a : asignaciones) {
-            System.out.println("asignacion = " + a);
-        }
-
+        return query.getResultList();
     }
 
+    public void insertar(Asignacion asignacion) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(asignacion);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public Object buscarPorId(Asignacion asignacion) {
+        em = getEntityManager();
+        return em.find(Asignacion.class, asignacion.getIdAsignacion());
+    }
+
+    public void actualizar(Asignacion asignacion) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(asignacion);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void eliminar(Asignacion asignacion) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.remove(em.merge(asignacion));
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 }

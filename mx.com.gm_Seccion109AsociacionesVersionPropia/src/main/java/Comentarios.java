@@ -7,6 +7,7 @@ A diferencia con el proyecto anterior, en Persistence, voy a cambiar:
 
 *las clases, de:
 <class>mx.com.gm.domain.Persona</class>
+
 a:
 <class>mx.com.gm.domain.Domicilio</class>
 <class>mx.com.gm.domain.Contacto</class>
@@ -16,6 +17,7 @@ a:
 
 *en la URL, en lugar de conectarme a la BBDD de 'test', me voy a conectar a la de 'sga':
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC"/>
+
 pasa a:
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sga?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC"/>
 
@@ -36,5 +38,18 @@ IDEM en alumno y asignacion
 
 Entonces, primero, las configs, pom, persistence, log4j, clean and build. Segundo, las clases de domain, que son
 las que tienen que estar en el persistence. 3ero, una clase Dao por cada clase de Entity, de modo que maneje sus
-conexiones
+conexiones => Pero, para evitar la repeticion de:
+
+    private EntityManagerFactory emf;
+    private EntityManager em;
+
+    public CursoDao() {
+        this.emf = Persistence.createEntityManagerFactory("HibernatePU");
+        this.em = emf.createEntityManager();
+    }
+
+en cada una de las clasesDao, se hace una clase abstracta (para que no se puedan crear objetos directos de ella) padre,
+y el resto de las clases heredaran estas conexiones, y cada una tendra sus propios metodos (los cuales suelen ser parecidos,
+por lo que se suele copiar y pegar, y refactorizar los nombres dentro)
+
 */

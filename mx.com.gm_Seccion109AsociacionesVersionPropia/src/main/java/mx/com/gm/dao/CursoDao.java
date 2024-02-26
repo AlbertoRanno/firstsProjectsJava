@@ -2,24 +2,68 @@ package mx.com.gm.dao;
 
 import java.util.List;
 import javax.persistence.*;
+import static mx.com.gm.dao.GenericDao.em;
 import mx.com.gm.domain.Curso;
 
-public class CursoDao {
+public class CursoDao extends GenericDao {
 
-    private EntityManagerFactory emf;
-    private EntityManager em;
-
-    public CursoDao() {
-        this.emf = Persistence.createEntityManagerFactory("HibernatePU");
-        this.em = emf.createEntityManager();
+    public List<Curso> listar() {
+        String hql = "SELECT c from Curso c";
+        em = getEntityManager();
+        Query query = em.createQuery(hql);
+        return query.getResultList();
     }
 
-    public void listar() {
-        String hql = "SELECT c from Curso c";
-        Query query = em.createQuery(hql);
-        List<Curso> cursos = query.getResultList();
-        for (Curso c : cursos) {
-            System.out.println("cursos = " + c);
+    public void insertar(Curso curso) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(curso);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public Object buscarPorId(Curso curso) {
+        em = getEntityManager();
+        return em.find(Curso.class, curso.getIdCurso());
+    }
+
+    public void actualizar(Curso curso) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(curso);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void eliminar(Curso curso) {
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.remove(em.merge(curso));
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            em.getTransaction().rollback();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
 }

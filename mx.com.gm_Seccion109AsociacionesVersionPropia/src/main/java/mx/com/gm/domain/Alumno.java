@@ -26,7 +26,7 @@ public class Alumno implements Serializable {
     Ojo con los atributos... NO SON DEL TIPO int, sino del tipo de la clase ya!
     private int idDomicilio;
     private int idContacto;
-    y Ojo que es del tipo Domicilio, y se llama domiciolio, y no idDomicilio
+    y Ojo que es del tipo Domicilio, y se llama domicilio, y no idDomicilio
     
     e indico el tipo de relacion:   
     
