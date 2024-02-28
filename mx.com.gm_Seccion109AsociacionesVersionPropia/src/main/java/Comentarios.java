@@ -1,55 +1,20 @@
 /*
-De nuevo, en el curso hicieron proyecto web con Glassfich y JavaEE, y yo hice uno SIN servidor ni capa web
+Ciclo de Vida con HIbernate y JPA
 
-Igualmente trataré de aplicar lo suficiente para configurar las asociaciones de manera local
+Creo clases en el paquete test.ciclovida, para analizar los distintos estados de los objetos, en los distintos metodos:
 
-A diferencia con el proyecto anterior, en Persistence, voy a cambiar:
+-En Estado1, veo como al ingresar un nuevo objeto a la bbdd, paso el objeto de estado transitivo, a persistido, a detached
 
-*las clases, de:
-<class>mx.com.gm.domain.Persona</class>
+-En Estado2, veo como al listar un objeto, o recuperarlo desde la bbdd, lo puedo hacer iniciando o no una transaccion,
+y la diferencia radicaria que cuando esta dentro de una transaccion, lo puedo modificar, por lo tanto esta en estado
+Persistido, a diferencia de la otra forma que estaria en estado separado o detached
 
-a:
-<class>mx.com.gm.domain.Domicilio</class>
-<class>mx.com.gm.domain.Contacto</class>
-<class>mx.com.gm.domain.Curso</class>
-<class>mx.com.gm.domain.Alumno</class>
-<class>mx.com.gm.domain.Asignacion</class>
+-En Estado3, (actualizar o modificar), si es necesario estar dentro de una transaccion, porque voy a modificar la bbdd.
+Podria utilizar de nuevo persist, pero es buena practica utilizar merge para actualizar. Recupero el objeto, y modifico
+con los setters, antes de iniciar la transaccion, pero el cambio se persiste, al iniciarla, y cerrada, vuelvo a detached
 
-*en la URL, en lugar de conectarme a la BBDD de 'test', me voy a conectar a la de 'sga':
-<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC"/>
-
-pasa a:
-<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sga?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC"/>
-
-y con eso queda actualizado Persistence, la config de log4j permanece igual
-
-Creo todas las clases necesarias dentro de domain (una por tabla dentro del schema de la bbdd)
-En el mismo orden que en la bbdd, primero las que no tienen relaciones con las clases creadas hasta el momento
-Domicilio, Contacto, Curso => Luego las que si las tienen => ALumno => relaciono con Domicilio y Contacto
-Por ultimo, la de transicion => Idem que en alumno, relaciono con ALumno y Curso
-Finalmente, agrego las contracaras de estas relaciones con la tabla de transicion, desde alumno a asignacion
-y desde curso a asignacion
-En ambos casos, seran relaciones de OneToMany, y ojo, porque estas no van a devolver un simple atributo, sino una lista
-Como tal, prestar atencion a los detalles, y si bien se agregan el set y get, no se agrega la lista al toString, porque
-podria ser demasiado pesado
-
-Leer Domicilio, que ahi aclaro unos detalles importantes
-IDEM en alumno y asignacion
-
-Entonces, primero, las configs, pom, persistence, log4j, clean and build. Segundo, las clases de domain, que son
-las que tienen que estar en el persistence. 3ero, una clase Dao por cada clase de Entity, de modo que maneje sus
-conexiones => Pero, para evitar la repeticion de:
-
-    private EntityManagerFactory emf;
-    private EntityManager em;
-
-    public CursoDao() {
-        this.emf = Persistence.createEntityManagerFactory("HibernatePU");
-        this.em = emf.createEntityManager();
-    }
-
-en cada una de las clasesDao, se hace una clase abstracta (para que no se puedan crear objetos directos de ella) padre,
-y el resto de las clases heredaran estas conexiones, y cada una tendra sus propios metodos (los cuales suelen ser parecidos,
-por lo que se suele copiar y pegar, y refactorizar los nombres dentro)
+-En Estado4, elimino el objeto de la bbdd, lo recupero antes de iniciar la transaccion (detached), inicia => persist 
+=> commit => NO vuelve a detached, SINO a transitivo, porque ya no tiene representacion en la BBDD... y va a ser 
+desechado por el recolector de basura
 
 */
