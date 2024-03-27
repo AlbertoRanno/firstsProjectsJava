@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <!--Necesario para que funcione thymeleaf en el html-->
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <!-- Reutilizo plantillas => para eso, misma etiqueta <header>, con: th:replace="ubicacion/nombre"
+        y los :: son para la seccion que quiera insertar (a la que le puse de nobmre header)   -->
+        <header th:replace="layout/plantilla :: header"></header>
+        <!-- Ver notacion para links debajo -->
+        <a th:href="@{/agregar}" th:text="#{persona.crear}">Crear Personaaa</a>
+        <br/>
+        <div th:if="${personas != null and !personas.empty}">
+            <table border="1">
+                <tr>
+                    <th>[[#{persona.nombre}]]</th>
+                    <th>[[#{persona.apellido}]]</th>
+                    <th>[[#{persona.email}]]</th>
+                    <th>[[#{persona.telefono}]]</th>
+                    <th>[[#{accion.editar}]]</th>
+                    <th>[[#{accion.eliminar}]]</th>
+                    <th>[[#{accion.eliminar2}]]</th>
+                </tr>
+                <tr th:each="persona : ${personas}">
+                    <td th:text="${persona.nombre}">Mostrar Nombre</td>
+                    <td th:text="${persona.apellido}">Mostrar Apellido</td>
+                    <td th:text="${persona.email}">Mostrar Email</td>
+                    <td th:text="${persona.telefono}">Mostrar Telefono</td>
+                    <!--Tipo Path Variable
+                    <td><a th:href="@{/editar/} + ${persona.idPersona}" th:text="Editar"></a></td>
+                    <td><a th:href="@{/eliminar/} + ${persona.idPersona}" th:text="Eliminar"></a></td>-->
+                    <td><a th:href="@{/editar/} + ${persona.idPersona}">[[#{accion.editar}]]</a></td>
+                    <td><a th:href="@{/eliminar/} + ${persona.idPersona}">[[#{accion.eliminar}]]</a></td>
+                    <!-- Otra forma, con Query Parameters 
+                    <td><a th:href="@{/eliminar2(idPersona=${persona.idPersona})}" th:text="Eliminar2"></a></td>-->
+                    <td><a th:href="@{/eliminar2(idPersona=${persona.idPersona})}">[[#{accion.eliminar2}]]</a></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${personas == null or personas.empty}">
+            [[#{persona.lista-vacia}]]
+        </div>
+        
+         <footer th:replace="layout/plantilla :: footer"></footer>
+        
+    </body>
+</html>
+<!--
+<h1>Inicio</h1>
+<!-- th:text="" como atributo de la etiqueta, es necesario para pasar, tanto un String (el cual va a reemplazar,
+el texto habitual que se escribe dentro de las etiquetas), como para pasar una variable (la cual puede venir
+tanto desde el controlador (y estar relacionada o no a una clase de entidad), como desde el application.properties).
+Para las variables se usa la notacion: ${}
+<p th:text="Mensaje"></p> 
+<p th:text="${mensaje}"></p>
+<p th:text="${saludo}"></p>
+
+Nombre: <span th:text="${persona.nombre}">Texto que sera reemplazado</span>
+<br/>
+Apellido: <span th:text="${persona.apellido}">por el valor de la variable</span>
+<br/>
+Email: <span th:text="${persona.email}">Pero sirve a priori, para diseño, por ejemplo:</span>
+<br/>
+Telefono: <span th:text="${persona.telefono}">"Telefono" (para verlo en el html => CSS)</span>
+<br/><br/>
+
+<!--A continuacion hago una tabla, que importe por cada fila, un objeto del tipo persona,
+    y por cada columna, sus distintos atributos.
+    Dado que no estoy conectado a una BBDD, los objetos estan hardcodeados en el controlador.
+
+    Tengo 2 Divs preparados, el primero, si esta todo ok, es decir, si la lista no fuera null o estuviera vacia,
+    imprime la tabla dentro del Div. En caso que este condicional no se cumpla, no hay un ELSE, sino que hay
+    otro Div debajo, para analizar el caso inverso, e imprimir un msj en consecuencia:
+    
+    La notacion es de javabeans
+<div th:if="${personas != null and !personas.empty}">
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Telefono</th>
+        </tr>
+<!-- El siguiente <tr> se debe repetir tantas veces, como personas haya: 
+La variable temporal, es personaa , con doble aa, porque no quise borrar que ya habia
+una variable persona que habia compartido antes
+Seria, en la nomenclatura de thymeleaf: th:each="nombreVariableTemporal : ${nombreListadoAIterar}"
+<tr th:each="personaa : ${personas}">
+    <td th:text="${personaa.nombre}">Mostrar Nombre</td>
+    <td th:text="${personaa.apellido}">Mostrar Apellido</td>
+    <td th:text="${personaa.email}">Mostrar Email</td>
+    <td th:text="${personaa.telefono}">Mostrar Telefono</td>
+</tr>
+</table>
+</div>
+<!-- Ahora, en lugar de un else, hago otro div, con la comparacion para los casos inversos:
+<div th:if="${personas == null or personas.empty}">
+    La lista de personas está vacía
+</div>
+-->

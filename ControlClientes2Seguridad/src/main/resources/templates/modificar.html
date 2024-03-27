@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns="http://www.w3.org/1999/xhtml">
+    <!-- Esto es para evitar el msj de error,
+    pero obliga a cerrar las etiquetas, ejemplo... "UTF-8"/>
+    sino marca mas errores -->
+    <head>
+        <title>Datos de la Persona</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"></header>
+        <h2>[[#{persona.formulario}]]</h2>
+        <a th:href="@{/}">[[#{accion.regresar}]]</a>
+        <br/>
+        <form th:action="@{/guardar}" method="post" th:object="${persona}">
+            <!-- Agrego un campo oculto para los IDs, para que hibernate y JPA
+            se den cuenta que si un objeto ya tiene un ID, no hay que guardar un
+            nuevo registro, sino actualizar uno existente, y viceversa.
+            Al usar el type hidden, forma parte de la informacion, pero no sera 
+            visible-->
+            <input type="hidden" name="idPersona" th:field="${persona.idPersona}"/>
+            <!-- Nota que en este campo, si inspecciono, podré ver el valor del id,
+            o la ausencia del valor si es que estoy creando un nuevo usuario.-->
+            
+            
+            
+            <!-- Con esto ejecuto la accion de guardar, en la ruta indicada.
+            Post, porque es el metodo http que corresponde.
+            Desde el controlador habia puesto que este formulario se va a 
+            relacionar con un objeto del tipo persona, para eso es la ultima
+            parte-->
+            <label for="nombre">[[#{persona.nombre}]]:</label>
+            <input type="text" name="nombre" th:field="${persona.nombre}"/>
+            <!-- Para la asociacion de thymeleaf con el atributo
+            con el que quiero acceder, tanto para acceder, como 
+            para modificar. Si lo inspecciono desde el navegador, 
+            vere el 'id="nombre"' pero no la sintaxis de thymeleaf,
+            dado que eso es para el lado del servidor
+            
+            Debajo agrego la info, para que en caso de error, se muestre:
+            Con lo siguiente pregunto si hay errores en ese campo
+            th:if="${#fields.hasErrors('nombre'}"
+            de haberlos, con lo siguiente, los despliego:
+            -->            
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error Nombre</span>
+            <!-- Luego, tengo que modificar el controlador, el path de guardar, para compartirle los errores-->
+
+            <br/>
+            <label for="apellido">[[#{persona.apellido}]]:</label>
+            <input type="text" name="apellido" th:field="${persona.apellido}"/>
+            <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error Apellido</span>
+            <br/>
+            <label for="email">[[#{persona.email}]]:</label>
+            <input type="text" name="email" th:field="${persona.email}"/>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error Email</span>
+            <br/>
+            <label for="telefono">[[#{persona.telefono}]]:</label>
+            <input type="text" name="telefono" th:field="${persona.telefono}"/>
+            <br/>
+            <!--Para reemplazar el valor de "Guardar" desde el properties:
+            <input type="submit" name="guardar" value="Guardar"/>
+            -->
+            <input type="submit" name="guardar" th:value="#{accion.guardar}"/>
+        </form>
+        <!-- Ahora tengo que mapear la accion de guardar. Para eso, tengo que
+        recuperar la info de esta planilla desde el controlador-->
+        
+        <footer th:replace="layout/plantilla :: footer"></footer>
+    </body>
+</html>

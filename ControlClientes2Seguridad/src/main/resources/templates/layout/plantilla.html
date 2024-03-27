@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Plantilla</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <!--Plantilla que se vab a reutilizar en todas las paginas: th:fragment= 
+        "header" nombre por el que la voy a llamar, pero podria ser cualquier nombre
+        Podria tener varios elementos dentro del contenedor, y todos se reutilizarian-->
+        <header th:fragment="header">
+            <!-- Para manejar los mensajes desde properties (util para varios idiomas) th:text="#{}"-->
+            <h1 th:text="#{plantilla.titulo}">Titulo</h1>
+        </header>
+        
+        <footer th:fragment="footer">
+            <!--Agrego el selector de idioma-->
+            <div>
+                <br/>
+                <a th:href="@{/(lang=es)}">ES</a> |
+                <a th:href="@{/(lang=en)}">EN</a> |
+                <span> [[ #{plantilla.pie-pagina} ]] <a href="http://www.globalmentoring.com.mx" target="_blank">GlobalMentoring.com.mx</a></span>
+            </div>
+            
+            <!-- Si aca hiciera lo mismo para los msjs, pierdo la estructura interna del link. Por eso hay otra forma: 
+            Dentro del texto (no la etiqueta), la sintaxis de doble corchetes, y dentro, la sintaxis de #{}
+            <p> Derechos Reservados <a href="http://www.globalmentoring.com.mx" target="_blank">GlobalMentoring.com.mx</a></p>
+           
+            <p> [[ #{plantilla.pie-pagina} ]] <a href="http://www.globalmentoring.com.mx" target="_blank">GlobalMentoring.com.mx</a></p>
+             -->
+        </footer>
+    </body>
+</html>
